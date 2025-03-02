@@ -1,5 +1,6 @@
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
+import { Dashboard } from "./dashboard";
 
 export default async function Page() {
   const session = await auth();
@@ -8,5 +9,5 @@ export default async function Page() {
     redirect("/sign-in");
   }
 
-  return <div>Dashboard</div>;
+  return <Dashboard />;
 }
