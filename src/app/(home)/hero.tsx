@@ -59,7 +59,7 @@ export function Hero() {
           transition={{ duration: 0.5, delay: 0.3 }}
           className="flex flex-wrap items-center justify-center gap-4 pt-4"
         >
-          <Link href="/dashboard">
+          <Link href="/sign-in">
             <Button size="lg" className="h-12 rounded-full px-8">
               Get Started
               <ArrowRight className="ml-2 h-4 w-4" />
