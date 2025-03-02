@@ -3,12 +3,13 @@
 import "@blocknote/core/fonts/inter.css";
 import "@blocknote/shadcn/style.css";
 
-import type { PartialBlock } from "@blocknote/core";
-import { useCreateBlockNote } from "@blocknote/react";
 import { BlockNoteView } from "@blocknote/shadcn";
+import { Textarea } from "../ui/textarea";
+import { AddCoverButton } from "./add-cover-button";
 import { Cover } from "./cover";
-import { Camera } from "lucide-react";
-import { Button } from "../ui/button";
+import { CustomSlashMenu } from "./custom-slash-menu";
+import { useEditor } from "./useEditor";
+import { useState } from "react";
 
 type EditorProps = {
   isEditable: boolean;
@@ -21,34 +22,37 @@ export default function Editor({
   initialContent,
   onChange,
 }: EditorProps) {
-  const editor = useCreateBlockNote({
-    initialContent: initialContent
-      ? (JSON.parse(initialContent) as PartialBlock[])
-      : undefined,
-  });
+  const editor = useEditor({ initialContent });
+  const [coverUrl, setCoverUrl] = useState<string | null>(null);
+
+  const handleCoverUpload = (coverUrl: string) => {
+    setCoverUrl(coverUrl);
+  };
 
   return (
     <div className="flex h-full w-full flex-col gap-12">
-      <Cover />
+      <Cover coverUrl={coverUrl} />
       <div className="container mx-auto space-y-4">
         <div className="group flex flex-col gap-2">
-          <div className="opacity-0 transition-opacity duration-400 group-hover:opacity-100">
-            <Button className="h-8" disabled>
-              <Camera className="h-4 w-4" />
-              Add cover
-            </Button>
+          <div className="flex opacity-0 transition-opacity duration-400 group-hover:opacity-100">
+            <AddCoverButton handleCoverUpload={handleCoverUpload} />
           </div>
-          <h1 className="text-4xl font-semibold tracking-tight">
-            This is a title
-          </h1>
+          <Textarea
+            className="line-clamp-1 min-h-0 resize-none appearance-none overflow-hidden truncate border-none p-0 !text-4xl font-bold shadow-none outline-none focus:outline-none focus-visible:ring-0"
+            rows={1}
+            placeholder="Untitled Page"
+          />
         </div>
         <div className="-mx-[54px]">
           <BlockNoteView
             editor={editor}
             onChange={onChange}
             editable={isEditable}
+            slashMenu={false}
             theme="light"
-          />
+          >
+            <CustomSlashMenu editor={editor} />
+          </BlockNoteView>
         </div>
       </div>
     </div>
