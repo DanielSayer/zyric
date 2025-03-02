@@ -2,6 +2,7 @@
 
 import "@blocknote/core/fonts/inter.css";
 import "@blocknote/shadcn/style.css";
+import "./styles.css";
 
 import { BlockNoteView } from "@blocknote/shadcn";
 import { Textarea } from "../ui/textarea";
@@ -49,7 +50,7 @@ export default function Editor({
             onChange={onChange}
             editable={isEditable}
             slashMenu={false}
-            theme="light"
+            theme="dark"
           >
             <CustomSlashMenu editor={editor} />
           </BlockNoteView>
