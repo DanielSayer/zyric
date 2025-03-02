@@ -3,8 +3,9 @@
 
 import { sql } from "drizzle-orm";
 import {
+  bigserial,
   index,
-  integer,
+  jsonb,
   pgTableCreator,
   timestamp,
   varchar,
@@ -18,19 +19,20 @@ import {
  */
 export const createTable = pgTableCreator((name) => `zyric_${name}`);
 
-export const posts = createTable(
-  "post",
+export const PlansTable = createTable(
+  "plans",
   {
-    id: integer("id").primaryKey().generatedByDefaultAsIdentity(),
+    id: bigserial("id", { mode: "bigint" }).primaryKey(),
     name: varchar("name", { length: 256 }),
+    content: jsonb("content"),
     createdAt: timestamp("created_at", { withTimezone: true })
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
     updatedAt: timestamp("updated_at", { withTimezone: true }).$onUpdate(
-      () => new Date()
+      () => new Date(),
     ),
   },
   (example) => ({
     nameIndex: index("name_idx").on(example.name),
-  })
+  }),
 );

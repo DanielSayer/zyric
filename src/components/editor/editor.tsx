@@ -34,7 +34,7 @@ export default function Editor({
       <Cover coverUrl={coverUrl} />
       <div className="container mx-auto space-y-4">
         <div className="group flex flex-col gap-2">
-          <div className="flex opacity-0 transition-opacity duration-400 group-hover:opacity-100">
+          <div className="duration-400 flex opacity-0 transition-opacity group-hover:opacity-100">
             <AddCoverButton handleCoverUpload={handleCoverUpload} />
           </div>
           <Textarea
