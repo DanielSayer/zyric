@@ -1,3 +1,14 @@
-export default async function Home() {
-  return <div>Hi</div>;
+"use client";
+
+import { Editor } from "@/components/editor";
+
+export default function Home() {
+  return (
+    <Editor
+      isEditable={true}
+      onChange={() => {
+        console.log("change");
+      }}
+    />
+  );
 }
