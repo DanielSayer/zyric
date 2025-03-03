@@ -7,6 +7,7 @@ import {
   index,
   jsonb,
   pgTableCreator,
+  text,
   timestamp,
   varchar,
 } from "drizzle-orm/pg-core";
@@ -23,7 +24,9 @@ export const PlansTable = createTable(
   "plans",
   {
     id: bigserial("id", { mode: "bigint" }).primaryKey(),
+    userId: text("user_id").notNull(),
     name: varchar("name", { length: 256 }),
+    coverImageUrl: varchar("cover_image_url", { length: 256 }),
     content: jsonb("content"),
     createdAt: timestamp("created_at", { withTimezone: true })
       .default(sql`CURRENT_TIMESTAMP`)
@@ -32,7 +35,7 @@ export const PlansTable = createTable(
       () => new Date(),
     ),
   },
-  (example) => ({
-    nameIndex: index("name_idx").on(example.name),
+  (idx) => ({
+    idIndex: index("id_index").on(idx.id),
   }),
 );

@@ -2,7 +2,7 @@
 
 import "@blocknote/core/fonts/inter.css";
 import "@blocknote/shadcn/style.css";
-import "./styles.css";
+import "@/styles/editor.css";
 
 import { BlockNoteView } from "@blocknote/shadcn";
 import { Textarea } from "../ui/textarea";

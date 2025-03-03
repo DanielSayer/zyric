@@ -6,7 +6,7 @@ type CoverProps = {
 
 export const Cover = ({ coverUrl }: CoverProps) => {
   return (
-    <div className="relative h-[25vh] w-full bg-neutral-300">
+    <div className="relative h-[25vh] w-full bg-neutral-300 dark:bg-gray-700">
       {coverUrl && (
         <Image
           alt="CoverImage"

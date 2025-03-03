@@ -1,13 +1,9 @@
-import { auth } from "@clerk/nextjs/server";
-import { redirect } from "next/navigation";
+import { api } from "@/trpc/server";
 import { Dashboard } from "./dashboard";
+import type { LessonPlan } from "@/lib/types/plan";
 
 export default async function Page() {
-  const session = await auth();
+  const lessonPlans = await api.plans.get();
 
-  if (!session.userId) {
-    redirect("/sign-in");
-  }
-
-  return <Dashboard />;
+  return <Dashboard plans={lessonPlans as LessonPlan[]} />;
 }
