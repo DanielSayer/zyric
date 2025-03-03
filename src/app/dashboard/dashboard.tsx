@@ -6,6 +6,7 @@ import { getGreeting } from "@/lib/misc/getGreeting";
 import type { LessonPlan } from "@/lib/types/plan";
 import { api } from "@/trpc/react";
 import { useRouter } from "next/navigation";
+import { LessonPlanCard } from "./lesson-plan-card";
 
 type DashboardProps = {
   plans: LessonPlan[];
@@ -17,7 +18,7 @@ export function Dashboard({ plans }: DashboardProps) {
 
   const handleCreateLessonPlan = async () => {
     await mutateAsync(void 0, {
-      onSuccess: ({ id }) => router.push(`/dashboard/${Number(id)}`),
+      onSuccess: ({ id }) => router.push(`/dashboard/${id}`),
     });
   };
 
@@ -40,6 +41,10 @@ export function Dashboard({ plans }: DashboardProps) {
           </Button>
         </div>
       )}
+
+      {plans.map((x) => (
+        <LessonPlanCard name={x.name} key={x.id} id={x.id} />
+      ))}
     </div>
   );
 }

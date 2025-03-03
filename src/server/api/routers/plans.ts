@@ -9,7 +9,9 @@ export const plansRouter = createTRPCRouter({
       where: eq(PlansTable.userId, ctx.userId),
     });
 
-    return posts.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+    return posts
+      .map(({ id, ...x }) => ({ id: id.toString(), ...x }))
+      .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
   }),
   create: protectedProcedure.mutation(async ({ ctx }) => {
     const [post] = await ctx.db

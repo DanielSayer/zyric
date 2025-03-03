@@ -1,5 +1,5 @@
 export type LessonPlan = {
-  id: bigint;
+  id: string;
   name: string | null;
   content: string | null;
   coverImageUrl: string | null;
