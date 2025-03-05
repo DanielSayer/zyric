@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 import { LessonPlanCard } from "./lesson-plan-card";
 
 type DashboardProps = {
-  plans: LessonPlan[];
+  plans: Omit<LessonPlan, "content" | "updatedAt" | "userId">[];
 };
 
 export function Dashboard({ plans }: DashboardProps) {

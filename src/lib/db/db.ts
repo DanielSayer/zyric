@@ -2,19 +2,20 @@ import Dexie, { type EntityTable } from "dexie";
 import type { BackgroundId } from "../backgrounds";
 import type { Block } from "@blocknote/core";
 
-type IDBLessonPlan = {
+export type IDBLessonPlan = {
   id: string;
   title: string;
-  backgroundId: BackgroundId | undefined;
+  backgroundId: BackgroundId | null;
   content: Block[];
+  updatedAt: string;
 };
 
-const db = new Dexie("zyric") as Dexie & {
+const indexDb = new Dexie("zyric") as Dexie & {
   lessonPlans: EntityTable<IDBLessonPlan, "id">;
 };
 
-db.version(1).stores({
-  lessonPlans: "id,backgroundId,title,content",
+indexDb.version(1).stores({
+  lessonPlans: "id,backgroundId,title,content,updatedAt",
 });
 
-export default db;
+export default indexDb;

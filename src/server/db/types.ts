@@ -1,8 +1,8 @@
+import type { BackgroundId } from "@/lib/backgrounds";
 import type { Block } from "@blocknote/core";
-import type { BackgroundId } from "../backgrounds";
 
-export type LessonPlan = {
-  id: string;
+export type DBLessonPlan = {
+  id: bigint;
   name: string | null;
   content: Block[];
   background: BackgroundId | null;

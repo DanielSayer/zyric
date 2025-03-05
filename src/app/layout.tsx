@@ -6,6 +6,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 
 import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
+import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
   title: "zyric",
@@ -21,6 +22,7 @@ export default function RootLayout({
       <html lang="en" className={`${GeistSans.variable}`}>
         <body className="dark">
           <TRPCReactProvider>{children}</TRPCReactProvider>
+          <Toaster richColors />
         </body>
       </html>
     </ClerkProvider>

@@ -1,7 +1,7 @@
 import type { BackgroundId } from "@/lib/backgrounds";
 
 type CoverProps = {
-  background: BackgroundId | undefined;
+  background: BackgroundId | null;
 };
 
 export const Cover = ({ background }: CoverProps) => {

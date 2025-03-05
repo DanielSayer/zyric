@@ -33,7 +33,7 @@ export const PlansTable = createTable(
     background: backgroundEnum("background"),
     content: jsonb("content"),
     createdAt: timestamp("created_at", { withTimezone: true })
-      .default(sql`CURRENT_TIMESTAMP`)
+      .defaultNow()
       .notNull(),
     updatedAt: timestamp("updated_at", { withTimezone: true }).$onUpdate(
       () => new Date(),

@@ -4,7 +4,6 @@ import "@blocknote/core/fonts/inter.css";
 import "@blocknote/shadcn/style.css";
 import "@/styles/editor.css";
 
-import type { LessonPlan } from "@/lib/types/plan";
 import { BlockNoteView } from "@blocknote/shadcn";
 import { Textarea } from "../ui/textarea";
 import { AddCoverButton } from "./add-cover-button";
@@ -12,13 +11,18 @@ import { Cover } from "./cover";
 import { CustomSlashMenu } from "./custom-slash-menu";
 import { useEditor } from "./useEditor";
 import { useSyncLessonPlanToIndexDb } from "./useSyncLessonPlanToIndexDb";
+import { IDBLessonPlan } from "@/lib/db/db";
+import { useSyncUpToIndexDb } from "./useSyncUpToIndexDb";
+import { useSyncLessonPlanToDb } from "./useSyncLessonPlanToDb";
 
 type EditorProps = {
-  lessonPlan: LessonPlan;
+  lessonPlan: IDBLessonPlan;
 };
 
 export default function Editor({ lessonPlan }: EditorProps) {
-  const editor = useEditor({ initialContent: undefined });
+  useSyncUpToIndexDb({ lessonPlan });
+  useSyncLessonPlanToDb(lessonPlan.id);
+  const editor = useEditor({ initialContent: lessonPlan.content });
 
   const {
     title,
