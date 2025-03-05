@@ -15,13 +15,5 @@ export default function Home() {
     return <div>Loading...</div>;
   }
 
-  return (
-    <Editor
-      lessonPlan={data as LessonPlan}
-      isEditable={true}
-      onChange={() => {
-        console.log("change");
-      }}
-    />
-  );
+  return <Editor lessonPlan={data as LessonPlan} />;
 }
