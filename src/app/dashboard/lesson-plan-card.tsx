@@ -23,10 +23,8 @@ export const LessonPlanCard = ({
         <div
           className={cn(
             "relative h-48 w-full overflow-hidden rounded-t-xl",
-            {
-              "bg-neutral-400": !background,
-            },
-            { background: !!background },
+            !!background && background,
+            { "bg-neutral-400": !background },
           )}
         ></div>
         <CardHeader>

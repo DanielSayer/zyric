@@ -7,7 +7,6 @@ type UseSyncUpToIndexDbProps = {
 
 export const useSyncUpToIndexDb = ({ lessonPlan }: UseSyncUpToIndexDbProps) => {
   useEffect(() => {
-    console.log("Syncing up to index db", lessonPlan);
     const setIndexDb = async () => {
       await indexDb.lessonPlans.put({
         id: lessonPlan.id,

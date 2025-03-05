@@ -21,7 +21,6 @@ export const useSyncLessonPlanToIndexDb = ({ lessonPlan }: HookProps) => {
 
   useEffect(() => {
     const saveToIdb = async () => {
-      console.log("Regular backup", debouncedBlocks);
       await indexDb.lessonPlans.put({
         id: lessonPlan.id,
         title: debouncedTitle,
