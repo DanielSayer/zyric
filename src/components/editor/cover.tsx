@@ -1,21 +1,15 @@
-import Image from "next/image";
+import type { BackgroundId } from "@/lib/backgrounds";
 
 type CoverProps = {
-  coverUrl: string | null;
+  background: BackgroundId | undefined;
 };
 
-export const Cover = ({ coverUrl }: CoverProps) => {
+export const Cover = ({ background }: CoverProps) => {
+  if (!background) {
+    return null;
+  }
+
   return (
-    <div className="relative h-[25vh] w-full bg-neutral-300 dark:bg-gray-700">
-      {coverUrl && (
-        <Image
-          alt="CoverImage"
-          fill
-          className="object-cover"
-          src={coverUrl}
-          sizes="100vw"
-        />
-      )}
-    </div>
+    <div className={`${background} relative h-64 w-full overflow-hidden`}></div>
   );
 };

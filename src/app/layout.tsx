@@ -1,4 +1,6 @@
 import "@/styles/globals.css";
+import "@/styles/backgrounds.css";
+
 import { TRPCReactProvider } from "@/trpc/react";
 import { ClerkProvider } from "@clerk/nextjs";
 

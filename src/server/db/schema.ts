@@ -1,11 +1,13 @@
 // Example model schema from the Drizzle docs
 // https://orm.drizzle.team/docs/sql-schema-declaration
 
+import { backgrounds } from "@/lib/backgrounds";
 import { sql } from "drizzle-orm";
 import {
   bigserial,
   index,
   jsonb,
+  pgEnum,
   pgTableCreator,
   text,
   timestamp,
@@ -20,13 +22,15 @@ import {
  */
 export const createTable = pgTableCreator((name) => `zyric_${name}`);
 
+export const backgroundEnum = pgEnum("background", backgrounds);
+
 export const PlansTable = createTable(
   "plans",
   {
     id: bigserial("id", { mode: "bigint" }).primaryKey(),
     userId: text("user_id").notNull(),
     name: varchar("name", { length: 256 }),
-    coverImageUrl: varchar("cover_image_url", { length: 256 }),
+    background: backgroundEnum("background"),
     content: jsonb("content"),
     createdAt: timestamp("created_at", { withTimezone: true })
       .default(sql`CURRENT_TIMESTAMP`)

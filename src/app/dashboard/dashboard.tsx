@@ -43,7 +43,12 @@ export function Dashboard({ plans }: DashboardProps) {
       )}
 
       {plans.map((x) => (
-        <LessonPlanCard name={x.name} key={x.id} id={x.id} />
+        <LessonPlanCard
+          id={x.id}
+          key={x.id}
+          name={x.name}
+          background={x.background}
+        />
       ))}
     </div>
   );

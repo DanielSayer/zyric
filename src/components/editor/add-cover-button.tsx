@@ -1,37 +1,46 @@
-import { cn } from "@/lib/utils";
-import { UploadButton } from "@/utils/uploadthing";
-import { buttonVariants } from "../ui/button";
+"use client";
+
 import { Camera } from "lucide-react";
+import { Button } from "../ui/button";
+import { Popover, PopoverTrigger, PopoverContent } from "../ui/popover";
+import { type BackgroundId, backgrounds } from "@/lib/backgrounds";
+import { cn } from "@/lib/utils";
+import { useState } from "react";
 
 type AddCoverButtonProps = {
-  handleCoverUpload: (coverUrl: string) => void;
+  handleCoverChange: (id: BackgroundId) => void;
 };
 
-export const AddCoverButton = ({ handleCoverUpload }: AddCoverButtonProps) => {
+export const AddCoverButton = ({ handleCoverChange }: AddCoverButtonProps) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handlePickCover = (id: BackgroundId) => {
+    handleCoverChange(id);
+    setIsOpen(false);
+  };
+
   return (
-    <UploadButton
-      endpoint="imageUploader"
-      appearance={{
-        button: cn(
-          buttonVariants(),
-          "ut-uploading:after:bg-primary ut-ready:bg-primary ut-uploading:bg-primary/80 ut-readying:bg-primary/80 focus-within:ring-ring focus-within:outline-none focus-within:ring-2 active:ring-primary",
-        ),
-        allowedContent: "hidden",
-      }}
-      onClientUploadComplete={(res) => {
-        handleCoverUpload(res[0]?.ufsUrl ?? "");
-      }}
-      onUploadError={(error: Error) => {
-        alert(`ERROR! ${error.message}`);
-      }}
-      content={{
-        button: (
-          <div className="flex items-center gap-2">
-            <Camera className="h-4 w-4" />
-            <span>Add cover</span>
-          </div>
-        ),
-      }}
-    />
+    <Popover open={isOpen} onOpenChange={setIsOpen}>
+      <PopoverTrigger asChild>
+        <Button>
+          <Camera /> Add Cover
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="w-full max-w-md" align="start">
+        <div className="grid grid-cols-4 gap-4">
+          {backgrounds.map((x) => (
+            <div
+              key={x}
+              role="button"
+              onClick={() => handlePickCover(x)}
+              className={cn(
+                "h-16 w-16 cursor-pointer overflow-hidden rounded bg-cover transition-all duration-150 hover:scale-105",
+                x,
+              )}
+            ></div>
+          ))}
+        </div>
+      </PopoverContent>
+    </Popover>
   );
 };
