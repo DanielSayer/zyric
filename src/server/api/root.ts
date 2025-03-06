@@ -1,4 +1,4 @@
-import { plansRouter } from "@/server/api/routers/plans";
+import { plansRouter } from "@/server/api/routers/plans/plans-router";
 import { createCallerFactory, createTRPCRouter } from "@/server/api/trpc";
 
 /**

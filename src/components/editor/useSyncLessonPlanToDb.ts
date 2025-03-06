@@ -1,7 +1,7 @@
-import indexDb, { IDBLessonPlan } from "@/lib/db/db";
+import indexDb, { type IDBLessonPlan } from "@/lib/db/db";
 import { api } from "@/trpc/react";
-import { useEffect, useRef } from "react";
 import { diff } from "jsondiffpatch";
+import { useEffect, useRef } from "react";
 import { toast } from "sonner";
 
 const DB_SYNC_TIMER = 1000 * 60;
@@ -37,6 +37,7 @@ export const useSyncLessonPlanToDb = (id: string) => {
       }
     };
 
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
     const interval = setInterval(syncLessonPlan, DB_SYNC_TIMER);
     return () => clearInterval(interval);
   }, [id, mutateAsync]);

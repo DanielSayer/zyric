@@ -11,7 +11,7 @@ import { Cover } from "./cover";
 import { CustomSlashMenu } from "./custom-slash-menu";
 import { useEditor } from "./useEditor";
 import { useSyncLessonPlanToIndexDb } from "./useSyncLessonPlanToIndexDb";
-import { IDBLessonPlan } from "@/lib/db/db";
+import type { IDBLessonPlan } from "@/lib/db/db";
 import { useSyncUpToIndexDb } from "./useSyncUpToIndexDb";
 import { useSyncLessonPlanToDb } from "./useSyncLessonPlanToDb";
 

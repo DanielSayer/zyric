@@ -18,5 +18,10 @@ export const useSyncUpToIndexDb = ({ lessonPlan }: UseSyncUpToIndexDbProps) => {
     };
 
     void setIndexDb();
-  }, []);
+  }, [
+    lessonPlan.backgroundId,
+    lessonPlan.content,
+    lessonPlan.id,
+    lessonPlan.title,
+  ]);
 };

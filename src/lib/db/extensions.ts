@@ -1,4 +1,4 @@
-import { DBLessonPlan } from "@/server/db/types";
+import type { DBLessonPlan } from "@/server/db/types";
 import type { LessonPlan } from "../types/plan";
 import type { IDBLessonPlan } from "./db";
 

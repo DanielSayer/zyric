@@ -2,7 +2,6 @@
 // https://orm.drizzle.team/docs/sql-schema-declaration
 
 import { backgrounds } from "@/lib/backgrounds";
-import { sql } from "drizzle-orm";
 import {
   bigserial,
   index,

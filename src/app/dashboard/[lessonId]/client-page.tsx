@@ -1,9 +1,9 @@
 "use client";
 
 import { Editor } from "@/components/editor";
-import indexDb, { IDBLessonPlan } from "@/lib/db/db";
+import indexDb, { type IDBLessonPlan } from "@/lib/db/db";
 import { toIdbLessonPlan } from "@/lib/db/extensions";
-import { DBLessonPlan } from "@/server/db/types";
+import type { DBLessonPlan } from "@/server/db/types";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import { useMemo } from "react";
@@ -24,7 +24,7 @@ export default function LessonPlanPage({ dbLessonPlan }: LessonPlanPageProps) {
       const idbLessonPlan = await indexDb.lessonPlans.get(lessonId);
 
       if (!idbLessonPlan) {
-        return Promise.reject("No lesson plan cached");
+        return Promise.reject(new Error("No lesson plan cached"));
       }
 
       return idbLessonPlan;
