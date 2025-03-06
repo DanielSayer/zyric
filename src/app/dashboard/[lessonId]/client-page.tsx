@@ -4,6 +4,7 @@ import { Editor } from "@/components/editor";
 import indexDb, { type IDBLessonPlan } from "@/lib/db/db";
 import { toIdbLessonPlan } from "@/lib/db/extensions";
 import type { DBLessonPlan } from "@/server/db/types";
+import { api } from "@/trpc/react";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import { useMemo } from "react";
@@ -33,26 +34,31 @@ export default function LessonPlanPage({ dbLessonPlan }: LessonPlanPageProps) {
     staleTime: 0,
   });
 
+  const { mutate } = api.plans.update.useMutation();
+
   const data: IDBLessonPlan | undefined = useMemo(() => {
     if (isFetching) return;
-    if (status === "error") {
+    if (!idbLessonPlan || status === "error") {
       return toIdbLessonPlan(dbLessonPlan);
     }
 
-    if (status === "success") {
-      if (!idbLessonPlan) {
-        return toIdbLessonPlan(dbLessonPlan);
-      }
+    const dbLastSyncTime = dbLessonPlan.updatedAt ?? dbLessonPlan.createdAt;
+    const dbSyncTime = dbLastSyncTime.getTime();
+    const idbSyncTime = new Date(idbLessonPlan.updatedAt).getTime();
 
-      const dbLastSyncTime = dbLessonPlan.updatedAt ?? dbLessonPlan.createdAt;
-      const dbSyncTime = dbLastSyncTime.getTime();
-      const idbSyncTime = new Date(idbLessonPlan.updatedAt).getTime();
+    const isIdbFresher = idbSyncTime > dbSyncTime;
 
-      return dbSyncTime > idbSyncTime
-        ? toIdbLessonPlan(dbLessonPlan)
-        : idbLessonPlan;
+    if (isIdbFresher) {
+      mutate({
+        id: idbLessonPlan.id,
+        title: dbLessonPlan.name ?? "",
+        coverId: dbLessonPlan.background,
+        content: dbLessonPlan.content,
+      });
     }
-  }, [idbLessonPlan, dbLessonPlan, status, isFetching]);
+
+    return isIdbFresher ? toIdbLessonPlan(dbLessonPlan) : idbLessonPlan;
+  }, [idbLessonPlan, dbLessonPlan, status, isFetching, mutate]);
 
   if (isFetching) {
     return <LoadingPage />;

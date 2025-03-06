@@ -1,7 +1,7 @@
 import { useDebounce } from "@/hooks/use-debounce";
 import indexDb, { type IDBLessonPlan } from "@/lib/db/db";
 import type { Block } from "@blocknote/core";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const TITLE_DEBOUNCE = 1000;
 const BLOCK_SAVE_DEBOUNCE = 5000;
@@ -11,6 +11,7 @@ type HookProps = {
 };
 
 export const useSyncLessonPlanToIndexDb = ({ lessonPlan }: HookProps) => {
+  const isMounted = useRef(false);
   const [blocks, setBlocks] = useState<Block[]>(lessonPlan.content);
   const debouncedBlocks = useDebounce(blocks, BLOCK_SAVE_DEBOUNCE);
 
@@ -30,7 +31,10 @@ export const useSyncLessonPlanToIndexDb = ({ lessonPlan }: HookProps) => {
       });
     };
 
-    void saveToIdb();
+    if (isMounted.current) {
+      void saveToIdb();
+    }
+    isMounted.current = true;
   }, [lessonPlan.id, debouncedTitle, coverId, debouncedBlocks]);
 
   return {

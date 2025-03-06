@@ -10,6 +10,8 @@ TODO (Features):
 - [ ] Tags
 - [ ] Templates
 - [ ] Calendar
+  - [ ] Schedules (i.e. school times)
+  - [ ] Quick assign to period
 - [ ] Image upload
 - [ ] Youtube embedding
 - [ ] Fix sidebar mess

@@ -11,7 +11,9 @@ export const useSyncLessonPlanToDb = (id: string) => {
 
   const { mutateAsync } = api.plans.update.useMutation({
     onSuccess: () => {
-      toast.success("Successfully saved.");
+      if (previousLession.current) {
+        toast.success("Successfully saved.", { duration: 1500 });
+      }
     },
     onError: () => {
       toast.error("Failed to save.");

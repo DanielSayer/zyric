@@ -14,6 +14,7 @@ import { useSyncLessonPlanToIndexDb } from "./useSyncLessonPlanToIndexDb";
 import type { IDBLessonPlan } from "@/lib/db/db";
 import { useSyncUpToIndexDb } from "./useSyncUpToIndexDb";
 import { useSyncLessonPlanToDb } from "./useSyncLessonPlanToDb";
+import { useSyncOnUnmount } from "./useSyncOnUnmount";
 
 type EditorProps = {
   lessonPlan: IDBLessonPlan;
@@ -35,6 +36,15 @@ export default function Editor({ lessonPlan }: EditorProps) {
   const onChange = () => {
     handleBlockChange(editor.document);
   };
+
+  useSyncOnUnmount({
+    lessonPlan: {
+      id: lessonPlan.id,
+      title,
+      backgroundId: coverId,
+      content: editor.document,
+    },
+  });
 
   return (
     <div className="flex h-full w-full flex-col gap-12">
