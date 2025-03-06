@@ -39,7 +39,7 @@ export default function Editor({ lessonPlan }: EditorProps) {
   return (
     <div className="flex h-full w-full flex-col gap-12">
       <Cover background={coverId} />
-      <div className="container mx-auto mt-4 space-y-4">
+      <div className="container mx-auto mt-4 space-y-4 px-4">
         <div className="group flex flex-col gap-2">
           <div className="duration-400 flex opacity-0 transition-opacity group-hover:opacity-100">
             <AddCoverButton handleCoverChange={handleCoverChange} />

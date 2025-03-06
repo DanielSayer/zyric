@@ -13,9 +13,9 @@ TODO (Features):
 - [ ] Image upload
 - [ ] Youtube embedding
 - [ ] Fix sidebar mess
-- [ ] Allow user to create multiple lesson plans
+- [x] Allow user to create multiple lesson plans
 
 TODO (Tech):
 
-- [ ] Structure backend properly
+- [x] Structure backend properly
 - [ ] Iron out types accross app

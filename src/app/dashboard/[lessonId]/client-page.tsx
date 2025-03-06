@@ -7,6 +7,7 @@ import type { DBLessonPlan } from "@/server/db/types";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import { useMemo } from "react";
+import LoadingPage from "./loading";
 
 type LessonPlanPageProps = {
   dbLessonPlan: DBLessonPlan;
@@ -54,7 +55,7 @@ export default function LessonPlanPage({ dbLessonPlan }: LessonPlanPageProps) {
   }, [idbLessonPlan, dbLessonPlan, status, isFetching]);
 
   if (isFetching) {
-    return <div>Loading...</div>;
+    return <LoadingPage />;
   }
 
   return <Editor lessonPlan={data!} />;

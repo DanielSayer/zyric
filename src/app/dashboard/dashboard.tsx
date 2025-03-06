@@ -24,7 +24,18 @@ export function Dashboard({ plans }: DashboardProps) {
 
   return (
     <div className="flex flex-col gap-16 p-8">
-      <h2 className="text-3xl font-semibold tracking-wide">{getGreeting()}</h2>
+      <h2 className="flex items-center justify-between text-3xl font-semibold tracking-wide">
+        {getGreeting()}
+        <Button
+          variant="rainbow"
+          isLoading={isPending}
+          loadingContent={"Creating..."}
+          className="dark:text-neutral-700"
+          onClick={handleCreateLessonPlan}
+        >
+          New Lesson Plan
+        </Button>
+      </h2>
 
       {plans.length === 0 && (
         <div className="flex w-full flex-col items-center justify-center gap-4 rounded-lg border border-dashed p-20 text-center">
@@ -42,14 +53,16 @@ export function Dashboard({ plans }: DashboardProps) {
         </div>
       )}
 
-      {plans.map((x) => (
-        <LessonPlanCard
-          id={x.id}
-          key={x.id}
-          name={x.name}
-          background={x.background}
-        />
-      ))}
+      <div className="flex flex-wrap gap-4">
+        {plans.map((x) => (
+          <LessonPlanCard
+            id={x.id}
+            key={x.id}
+            name={x.name}
+            background={x.background}
+          />
+        ))}
+      </div>
     </div>
   );
 }

@@ -29,7 +29,7 @@ export const plansRouter = createTRPCRouter({
         lessonPlanId,
         title: rest.title,
         bacgroundId: rest.coverId,
-        content: rest.content as Block[],
+        content: (rest.content ?? []) as Block[],
         userId: ctx.userId,
       });
     }),

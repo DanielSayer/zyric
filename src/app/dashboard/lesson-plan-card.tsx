@@ -17,7 +17,7 @@ export const LessonPlanCard = ({
   return (
     <Link
       href={`/dashboard/${id}`}
-      className="max-w-96 transition-all duration-200 hover:scale-[1.02]"
+      className="w-96 transition-all duration-200 hover:scale-[1.02]"
     >
       <Card>
         <div

@@ -9,5 +9,5 @@ export const updatePlanSchema = z.object({
   id: z.string(),
   title: z.string(),
   coverId: z.enum(backgrounds).nullable(),
-  content: z.array(z.any()),
+  content: z.array(z.any()).nullable(),
 });
