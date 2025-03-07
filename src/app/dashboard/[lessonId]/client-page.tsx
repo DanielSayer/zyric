@@ -51,9 +51,9 @@ export default function LessonPlanPage({ dbLessonPlan }: LessonPlanPageProps) {
     if (isIdbFresher) {
       mutate({
         id: idbLessonPlan.id,
-        title: dbLessonPlan.name ?? "",
-        coverId: dbLessonPlan.background,
-        content: dbLessonPlan.content,
+        title: idbLessonPlan.title,
+        coverId: idbLessonPlan.backgroundId,
+        content: idbLessonPlan.content,
       });
     }
 

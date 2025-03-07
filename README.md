@@ -6,7 +6,7 @@ Notes:
 
 TODO (Features):
 
-- [ ] Deal with quick switchs off screen / closing windows / going back to home etc
+- [x] Deal with quick switchs off screen / closing windows / going back to home etc
 - [ ] Tags
 - [ ] Templates
 - [ ] Calendar

@@ -1,41 +1,39 @@
+import { updateIDBLessonPlan } from "@/lib/db/data-access/update-lesson-plan";
 import type { IDBLessonPlan } from "@/lib/db/db";
-import indexDb from "@/lib/db/db";
+import { api } from "@/trpc/react";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useRef } from "react";
 
+type LessonPlan = Omit<IDBLessonPlan, "updatedAt">;
 type UseSyncOnUnmountProps = {
-  lessonPlan: Omit<IDBLessonPlan, "updatedAt">;
+  lessonPlan: LessonPlan;
 };
 
 export const useSyncOnUnmount = ({ lessonPlan }: UseSyncOnUnmountProps) => {
-  const saveToIndexDbRef = useRef<() => void>();
+  const lessonPlanRef = useRef<LessonPlan>(lessonPlan);
+  const { mutate } = api.plans.update.useMutation();
   const pathname = usePathname();
   const params = useSearchParams();
 
   useEffect(() => {
-    saveToIndexDbRef.current = () => {
-      indexDb
-        .table("lessonPlans")
-        .put({
-          id: lessonPlan.id,
-          title: lessonPlan.title ?? "",
-          backgroundId: lessonPlan.backgroundId,
-          content: lessonPlan.content,
-          updatedAt: new Date().toISOString(),
-        })
-        .catch(console.error);
-    };
+    lessonPlanRef.current = lessonPlan;
   }, [lessonPlan]);
 
   useEffect(() => {
     return () => {
-      saveToIndexDbRef.current?.();
+      mutate({
+        id: lessonPlanRef.current.id,
+        title: lessonPlanRef.current.title,
+        coverId: lessonPlanRef.current.backgroundId,
+        content: lessonPlanRef.current.content,
+      });
+      updateIDBLessonPlan(lessonPlanRef.current);
     };
-  }, [pathname, params]);
+  }, [pathname, params, mutate]);
 
   useEffect(() => {
     const handleBeforeUnload = () => {
-      saveToIndexDbRef.current?.();
+      updateIDBLessonPlan(lessonPlanRef.current);
 
       // This ensures the above runs
       // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -52,7 +50,7 @@ export const useSyncOnUnmount = ({ lessonPlan }: UseSyncOnUnmountProps) => {
   useEffect(() => {
     const handleVisibilityChange = () => {
       if (document.visibilityState === "hidden") {
-        saveToIndexDbRef.current?.();
+        updateIDBLessonPlan(lessonPlanRef.current);
 
         // This ensures the above runs
         // eslint-disable-next-line @typescript-eslint/no-empty-function
