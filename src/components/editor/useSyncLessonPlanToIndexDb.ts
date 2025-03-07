@@ -1,7 +1,8 @@
 import { useDebounce } from "@/hooks/use-debounce";
 import indexDb, { type IDBLessonPlan } from "@/lib/db/db";
 import type { Block } from "@blocknote/core";
-import { useEffect, useRef, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 
 const TITLE_DEBOUNCE = 1000;
 const BLOCK_SAVE_DEBOUNCE = 5000;
@@ -11,7 +12,6 @@ type HookProps = {
 };
 
 export const useSyncLessonPlanToIndexDb = ({ lessonPlan }: HookProps) => {
-  const isMounted = useRef(false);
   const [blocks, setBlocks] = useState<Block[]>(lessonPlan.content);
   const debouncedBlocks = useDebounce(blocks, BLOCK_SAVE_DEBOUNCE);
 
@@ -20,8 +20,9 @@ export const useSyncLessonPlanToIndexDb = ({ lessonPlan }: HookProps) => {
 
   const [coverId, setCoverId] = useState(lessonPlan.backgroundId);
 
-  useEffect(() => {
-    const saveToIdb = async () => {
+  useQuery({
+    queryKey: [lessonPlan.id, debouncedTitle, coverId, debouncedBlocks],
+    queryFn: async () => {
       await indexDb.lessonPlans.put({
         id: lessonPlan.id,
         title: debouncedTitle,
@@ -29,13 +30,13 @@ export const useSyncLessonPlanToIndexDb = ({ lessonPlan }: HookProps) => {
         content: debouncedBlocks,
         updatedAt: new Date().toISOString(),
       });
-    };
 
-    if (isMounted.current) {
-      void saveToIdb();
-    }
-    isMounted.current = true;
-  }, [lessonPlan.id, debouncedTitle, coverId, debouncedBlocks]);
+      return { updated: true };
+    },
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
+  });
 
   return {
     title,

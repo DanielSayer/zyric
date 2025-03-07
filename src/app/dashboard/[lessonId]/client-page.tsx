@@ -57,7 +57,7 @@ export default function LessonPlanPage({ dbLessonPlan }: LessonPlanPageProps) {
       });
     }
 
-    return isIdbFresher ? toIdbLessonPlan(dbLessonPlan) : idbLessonPlan;
+    return isIdbFresher ? idbLessonPlan : toIdbLessonPlan(dbLessonPlan);
   }, [idbLessonPlan, dbLessonPlan, status, isFetching, mutate]);
 
   if (isFetching) {
