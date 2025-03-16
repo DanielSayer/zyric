@@ -28,7 +28,7 @@ export const plansRouter = createTRPCRouter({
       return await updateLessonPlan({
         lessonPlanId,
         title: rest.title,
-        bacgroundId: rest.coverId,
+        background: rest.coverId ?? null,
         content: (rest.content ?? []) as Block[],
         userId: ctx.userId,
       });

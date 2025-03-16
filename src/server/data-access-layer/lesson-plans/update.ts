@@ -7,7 +7,7 @@ import { and, eq } from "drizzle-orm";
 export type UpdateLessonPlanRequest = {
   lessonPlanId: bigint;
   title: string;
-  bacgroundId: BackgroundId | null;
+  background: BackgroundId | null;
   content: Block[];
   userId: string;
 };
@@ -17,7 +17,7 @@ export async function update(req: UpdateLessonPlanRequest) {
     .update(PlansTable)
     .set({
       name: req.title,
-      background: req.bacgroundId,
+      background: req.background,
       content: req.content,
     })
     .where(

@@ -52,7 +52,7 @@ export default function LessonPlanPage({ dbLessonPlan }: LessonPlanPageProps) {
       mutate({
         id: idbLessonPlan.id,
         title: idbLessonPlan.title,
-        coverId: idbLessonPlan.backgroundId,
+        coverId: idbLessonPlan.backgroundId ?? null,
         content: idbLessonPlan.content,
       });
     }

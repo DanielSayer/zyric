@@ -8,6 +8,6 @@ export const getPlanSchema = z.object({
 export const updatePlanSchema = z.object({
   id: z.string(),
   title: z.string(),
-  coverId: z.enum(backgrounds).nullable(),
+  coverId: z.enum(backgrounds).optional().nullable(),
   content: z.array(z.any()).nullable(),
 });
