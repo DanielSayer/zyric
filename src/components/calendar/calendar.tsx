@@ -23,7 +23,9 @@ export function Calendar() {
             nowIndicator
             editable
             selectable
-            height={"calc(100vh - 8rem)"}
+            handleWindowResize
+            height={"calc(100vh - 6rem)"}
+            scrollTime="08:00:00"
             initialView="timeGridDay"
             datesSet={(args) => {
               setIsDayView(args.view.type === "timeGridDay");

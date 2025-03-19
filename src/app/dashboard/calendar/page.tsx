@@ -4,7 +4,7 @@ import { Calendar } from "@/components/calendar/calendar";
 
 export default function Page() {
   return (
-    <div className="p-8">
+    <div className="px-8 pt-8">
       <Calendar />
     </div>
   );
